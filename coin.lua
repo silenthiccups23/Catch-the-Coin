@@ -10,12 +10,6 @@ function Coin.new(x, y)
     }
 end
 
-function love.update(dt)
-    coin.y = coin.y + coin.speed * dt --coing moving down
-    if (coin.y > love.graphics.getHeight() + coin.diameter) then 
-        coin.y = -coin.y
-    end
-end
 
 
 
