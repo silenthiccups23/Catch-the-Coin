@@ -4,9 +4,9 @@ function Coin.new(x, y)
     return {
         x = x,
         y = y,
-        diameter = 16,
+        radius = 16,
         value = 1,
-        speed = 100
+        speed = 200
     }
 end
 
