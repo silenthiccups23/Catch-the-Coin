@@ -6,7 +6,7 @@ function Player.new(x, y)
         y = y,
         width = 100,  -- Basket width
         height = 30,  -- Basket height
-        speed = 300   -- Movement speed
+        speed = 400   -- Movement speed
     }
     
 end
