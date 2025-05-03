@@ -27,12 +27,13 @@ function love.update(dt)
         coin.y = coin.y + coin.speed * dt
     end
     --spawning after one second 
-    coinTimer = coinTimer + 1 --adds 1 second every 60 frames at 60 FPS
-    if coinTimer == 1 then 
+    coinTimer = coinTimer + dt --adds 1 second every 60 frames at 60 FPS
+    if coinTimer >= 1 then 
+        print("spawning coing at x:", new_x)
         x = math.random(1280 - 16)
         table.insert(coins, Coin.new(x, -50))
 
-        coinTimer = 0 -- reset the cointimer to 0. 
+        coinTimer = -1 -- reset the cointimer to 0. 
     end
 
 
