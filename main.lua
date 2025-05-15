@@ -52,7 +52,7 @@ function love.update(dt)
         local new_x = math.random(1280 - 16)
         print("spawning coing at x:", new_x)
         table.insert(coins, Coin.new(new_x, -50))
-        coinTimer = 0 -- reset the cointimer
+        coinTimer = -.09s -- reset the cointimer
     end
 end
 
