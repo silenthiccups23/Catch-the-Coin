@@ -50,6 +50,8 @@ function love.update(dt)
     
       if coinTimer >= 1 then
         print(coinTimer)
+    if coinTimer >= 1 then 
+        print("spawning coing at x:", new_x)
         local new_x = math.random(1280 - 16)
         table.insert(coins, Coin.new(new_x, -50))
 
