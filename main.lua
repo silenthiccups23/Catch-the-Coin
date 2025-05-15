@@ -10,11 +10,12 @@ local coinSpawnTime = 1  -- Spawn a coin every second
 
 
 function love.load()
+  
     player = Player.new(1280/2 - 50, 650)  -- Create basket at bottom of screen
     x = math.random(1280 - 16)
     table.insert(coins, Coin.new(x, -50))
-end
-
+  end
+  
 function love.update(dt)
     --basquet movement 
     if love.keyboard.isDown("left") then --basquet moving left
@@ -26,20 +27,39 @@ function love.update(dt)
     for i, coin in ipairs(coins) do
         coin.y = coin.y + coin.speed * dt
     end
+    
+    --Check collision (backward loop)
+    for i = #coins, 1, -1 do 
+      local coin = coins[i]
+      -- Clamp to find closes point 
+      local closestX = math.max(player.x, math.min(player.x + player.width, coin.x))
+      local closestY = math.max(player.y, math.min(player.y + player.height, coin.y))
+      
+      --calculate distance 
+      local dx = closestX - coin.x 
+      local dy = closestY - coin.y
+      local distance = math.sqrt(dx * dx + dy * dy) 
+      
+      --check collision
+      if distance <= coin.radius then 
+        score = score + 1 
+        table.remove(coins, i)
+      end
     --spawning after one second 
     coinTimer = coinTimer + dt --adds 1 second every 60 frames at 60 FPS
-    if coinTimer >= 1 then 
-        print("spawning coing at x:", new_x)
-        x = math.random(1280 - 16)
-        table.insert(coins, Coin.new(x, -50))
+    
+      if coinTimer >= 1 then
+        print(coinTimer)
+        local new_x = math.random(1280 - 16)
+        table.insert(coins, Coin.new(new_x, -50))
 
         coinTimer = -1 -- reset the cointimer to 0. 
-    end
+      end
+    end 
 
 
 
 end
-
 function love.draw()
     love.graphics.setColor(0,0,1)
     love.graphics.rectangle("fill",player.x, player.y, player.width, player.height) --Player blue color 

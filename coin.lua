@@ -10,8 +10,9 @@ function Coin.new(x, y)
     }
 end
 
-
-
+function love.draw()
+  
+  end
 
 
 
