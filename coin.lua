@@ -9,13 +9,4 @@ function Coin.new(x, y)
         speed = 200
     }
 end
-
-function love.draw()
-  
-  end
-
-
-
-
-
 return Coin
