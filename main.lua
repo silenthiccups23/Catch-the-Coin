@@ -16,17 +16,45 @@ function love.load()
 end
 
 function love.update(dt)
-    --basquet movement 
-    if love.keyboard.isDown("left") then --basquet moving left
-        player.x = player.x - player.speed * dt
-    elseif love.keyboard.isDown("right") then --basquet moving right
-        player.x = player.x + player.speed * dt
+    
+    updatePlayer(dt)
+    updateCoins(dt)
+    checkCollisions()
+    spawnCoins(dt)
+end
+
+function love.draw()
+    love.graphics.setColor(0,0,1)
+    love.graphics.rectangle("fill",player.x, player.y, player.width, player.height) --Player blue color 
+
+    love.graphics.setColor(1,1,1) -- white color
+    love.graphics.print("Score: " .. score, 10,10)
+
+    love.graphics.setColor(1,0,0)
+    for i, coin in ipairs(coins) do
+        love.graphics.circle("fill", coin.x, coin.y, coin.radius)
     end
+end
+
+-- ===== HELPER FUNCTIONS =====
+
+function updatePlayer(dt)
+    --handle input and movement 
+    if love.keyboard.isDown("left") then 
+        player.x = player.x - player.speed * dt
+    elseif love.keyboard.isDown("right") then 
+        player.x = player.x + player.speed * dt
+    end 
+end
+
+function updateCoins(dt)
     --Coin movements
     for i, coin in ipairs(coins) do
         coin.y = coin.y + coin.speed * dt
     end
-    
+end
+
+function checkCollisions()
     --Check collision (backward loop)
     for i = #coins, 1, -1 do 
         local coin = coins[i]
@@ -45,7 +73,9 @@ function love.update(dt)
             table.remove(coins, i)
         end
     end
+end
 
+function spawnCoins(dt)
     --spawning after one second 
     coinTimer = coinTimer + dt --adds 1 second every 60 frames at 60 FPS
     if coinTimer >= 1 then 
@@ -53,19 +83,6 @@ function love.update(dt)
         print("spawning coing at x:", new_x)
         table.insert(coins, Coin.new(new_x, -50))
         coinTimer = -1 -- reset the cointimer
-    end
-end
-
-function love.draw()
-    love.graphics.setColor(0,0,1)
-    love.graphics.rectangle("fill",player.x, player.y, player.width, player.height) --Player blue color 
-
-    love.graphics.setColor(1,1,1) -- white color
-    love.graphics.print("Score: " .. score, 10,10)
-
-    love.graphics.setColor(1,0,0)
-    for i, coin in ipairs(coins) do
-        love.graphics.circle("fill", coin.x, coin.y, coin.radius)
     end
 end
 
